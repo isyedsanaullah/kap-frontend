@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* ── Enable class-based dark mode (Tailwind v4) ──────────── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Custom scrollbar ────────────────────────────────────── */
+.custom-scroll::-webkit-scrollbar        { width: 4px; height: 4px; }
+.custom-scroll::-webkit-scrollbar-track  { background: transparent; }
+.custom-scroll::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.12); border-radius: 4px; }
+.custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ── Smooth theme transitions (exclude transform so sidebar slides smoothly) ─ */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke, opacity;
+  transition-timing-function: ease;
+  transition-duration: 0.15s;
+}
+
+/* ── Sidebar — hardware-accelerated slide ────────────────── */
+#sidebar {
+  transition-property: transform !important;
+  transition-duration: 300ms !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: transform;
+}
+
+/* ── Dropdown menu animation ─────────────────────────────── */
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+.dropdown-menu {
+  animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top right;
+}
+
+/* ── Hamburger bar transitions ───────────────────────────── */
+#menu-button span {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity   0.2s ease,
+              width     0.2s ease !important;
+}
