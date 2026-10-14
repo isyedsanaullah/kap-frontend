@@ -42,7 +42,7 @@ npm run build
    - Connect this repository: `https://github.com/isyedsanaullah/kap-frontend`.
 
 2. **Build Settings**:
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
 
 3. **Environment Variables**:
