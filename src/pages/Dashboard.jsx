@@ -93,43 +93,25 @@ export default function Dashboard() {
     <main className="p-3 min-h-[calc(100vh-4rem)]">
       <div className="max-w-7xl mx-auto space-y-5">
 
-        {/* ── Range Picker Header ── */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-
-          {/* Active range label */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
-              <svg className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span>Showing data for:</span>
-            </div>
-            <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 border border-blue-200/80 dark:border-blue-800/60 px-2.5 py-0.5 rounded-full">
-              {RANGES.find(r => r.value === range)?.label}
-            </span>
-          </div>
-
-          {/* Pill-tab range selector */}
-          <div className="flex items-center gap-1 p-1 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 rounded-2xl backdrop-blur-sm w-full sm:w-auto">
-            {RANGES.map(r => {
-              const isActive = r.value === range;
-              return (
-                <button
-                  key={r.value}
-                  type="button"
-                  onClick={() => setRange(r.value)}
-                  className={`flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
-                    isActive
-                      ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm border border-gray-200/80 dark:border-gray-600/60"
-                      : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/60 dark:hover:bg-gray-700/50"
-                  }`}
-                >
-                  {r.label}
-                </button>
-              );
-            })}
-          </div>
-
+        {/* ── Range Picker ── */}
+        <div className="flex items-center gap-1 p-1 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 rounded-2xl backdrop-blur-sm w-full sm:w-auto">
+          {RANGES.map(r => {
+            const isActive = r.value === range;
+            return (
+              <button
+                key={r.value}
+                type="button"
+                onClick={() => setRange(r.value)}
+                className={`flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
+                  isActive
+                    ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm border border-gray-200/80 dark:border-gray-600/60"
+                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/60 dark:hover:bg-gray-700/50"
+                }`}
+              >
+                {r.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* ── Statistics Cards Carousel ── */}
