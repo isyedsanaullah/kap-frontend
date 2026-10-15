@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../api/service";
+import StatCardsCarousel from "../components/dashboard/StatCardsCarousel";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, BarChart, Bar, Legend,
@@ -18,19 +19,7 @@ const RANGES = [
   { value: "quarter", label: "Last 90 Days" },
 ];
 
-const STAT_CARDS = (s, profitMargin) => [
-  { label: "Total Sales Value", value: `PKR ${fmt(s.totalSalesValue)}`, color: "blue",    icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-  { label: "Net Profit",        value: `PKR ${fmt(s.netProfit)}`,       color: "emerald", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
-  { label: "Total Due",         value: `PKR ${fmt(s.totalDue)}`,        color: "amber",   icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-  { label: "Profit Margin",     value: `${profitMargin}%`,              color: "violet",  icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
-];
 
-const COLOR = {
-  blue:    "from-blue-500/10 to-indigo-500/10 border-blue-200 dark:border-blue-900/40 text-blue-600 dark:text-blue-400",
-  emerald: "from-emerald-500/10 to-teal-500/10 border-emerald-200 dark:border-emerald-900/40 text-emerald-600 dark:text-emerald-400",
-  amber:   "from-amber-500/10 to-orange-500/10 border-amber-200 dark:border-amber-900/40 text-amber-600 dark:text-amber-400",
-  violet:  "from-violet-500/10 to-purple-500/10 border-violet-200 dark:border-violet-900/40 text-violet-600 dark:text-violet-400",
-};
 
 /* tiny custom tooltip for recharts */
 const ChartTooltip = ({ active, payload, label }) => {
@@ -124,40 +113,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ── KPI Cards ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {STAT_CARDS(stats, profitMargin).map(card => (
-            <div key={card.label}
-              className={`relative bg-gradient-to-br ${COLOR[card.color]} border rounded-2xl p-4 overflow-hidden hover:shadow-lg transition-shadow`}>
-              <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide leading-tight">{card.label}</p>
-                  <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mt-1 truncate">{card.value}</p>
-                </div>
-                <div className={`p-2 rounded-xl bg-white/60 dark:bg-black/20 flex-shrink-0 ${COLOR[card.color].split(' ')[4]}`}>
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={card.icon}/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Secondary stats ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: "Total Sales",     value: `${stats.totalSalesCount || 0}`, suffix: " orders" },
-            { label: "Products",        value: `${stats.totalProducts   || 0}`, suffix: "" },
-            { label: "Customers",       value: `${stats.totalCustomers  || 0}`, suffix: "" },
-            { label: "Inventory Value", value: `PKR ${fmt(stats.inventoryValue)}`, suffix: "" },
-          ].map(s => (
-            <div key={s.label} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 min-w-0">
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide truncate">{s.label}</p>
-              <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mt-1 truncate">{s.value}{s.suffix}</p>
-            </div>
-          ))}
-        </div>
+        {/* ── Statistics Cards Carousel ── */}
+        <StatCardsCarousel stats={stats} profitMargin={profitMargin} />
 
         {/* ── Sales Trend Chart ── */}
         {chartData.length > 0 && (

@@ -9,6 +9,15 @@
 .custom-scroll::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.12); border-radius: 4px; }
 .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
 
+/* ── Hide scrollbar for carousel / touch tracks ──────────── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ── Smooth theme transitions (exclude transform so sidebar slides smoothly) ─ */
 *, *::before, *::after {
   transition-property: background-color, border-color, color, fill, stroke, opacity;
@@ -39,4 +48,11 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               opacity   0.2s ease,
               width     0.2s ease !important;
+}
+
+/* ── Carousel auto-advance progress animation ────────────── */
+@keyframes statProgress {
+  0%   { width: 0%; opacity: 0.6; }
+  90%  { width: 95%; opacity: 1; }
+  100% { width: 100%; opacity: 0.8; }
 }
