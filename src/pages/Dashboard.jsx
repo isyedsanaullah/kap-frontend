@@ -120,9 +120,6 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
               Top Overdue Payments
             </h2>
           </div>
-          <p className="text-xs text-gray-500 dark:text-slate-400">
-            Ranked by total outstanding customer balance
-          </p>
         </div>
         <button
           onClick={() => navigate('/due-reminders')}
@@ -153,13 +150,6 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
 
       {/* Top 10 Overdue Customers List Header */}
       <div className="space-y-3 pt-1 border-t border-gray-100 dark:border-white/5">
-        <div className="flex items-center justify-between text-[11px] text-gray-400 dark:text-slate-500 px-1">
-          <span className="font-semibold uppercase tracking-wider text-gray-500 dark:text-slate-400">
-            Top 10 Accounts by Balance
-          </span>
-          <span>Click customer to view ledger</span>
-        </div>
-
         {/* Top 10 Scrollable List (Height matched with StockChart for clean dashboard symmetry) */}
         <div className="h-[560px] overflow-y-auto custom-scroll pr-1.5 space-y-2">
           {topOverdue.length === 0 ? (
@@ -473,11 +463,10 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
                 key={cat.key}
                 type="button"
                 onClick={() => setSelectedCategory(cat.key)}
-                className={`w-full py-2 sm:py-2.5 px-2 rounded-xl text-xs font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer ${
-                  isActive
+                className={`w-full py-2 sm:py-2.5 px-2 rounded-xl text-xs font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer ${isActive
                     ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm border border-gray-200/80 dark:border-white/10 font-bold"
                     : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-slate-700/40"
-                }`}
+                  }`}
               >
                 {cat.label}
               </button>

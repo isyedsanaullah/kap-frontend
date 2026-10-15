@@ -61,9 +61,6 @@ const StockChart = ({ data }) => {
               Product Inventory
             </h2>
           </div>
-          <p className="text-xs text-gray-500 dark:text-slate-400">
-            Real-time stock health across {totalTracked.toLocaleString()} catalog items
-          </p>
         </div>
         <button
           onClick={() => navigate('/stock')}
