@@ -359,47 +359,7 @@ export default function StatCardsCarousel({ stats = {}, profitMargin = 0 }) {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={handleMouseLeave}
     >
-      {/* ── Carousel Top Controls Bar ── */}
-      <div className="flex items-center justify-between mb-3 px-0.5">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 py-1 px-2.5 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/60 text-xs font-semibold text-slate-700 dark:text-slate-300">
-            <span className={`w-2 h-2 rounded-full ${isPaused ? "bg-amber-400" : "bg-emerald-500 animate-pulse"}`} />
-            <span>Key Metrics</span>
-          </div>
-          <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
-            {cardsPerView === 1 ? "Swipe or use arrows" : "3 cards at a time • Auto-advances every 5s"}
-          </span>
-        </div>
 
-        {/* Navigation Buttons (Top/Corner Controls) */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-mono font-medium text-gray-500 dark:text-gray-400 hidden xs:inline mr-1">
-            {String(currentIndex + 1).padStart(2, "0")} / {String(maxIndex + 1).padStart(2, "0")}
-          </span>
-
-          <button
-            type="button"
-            onClick={handlePrev}
-            aria-label="Previous statistics card"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-          >
-            <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next statistics card"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/40"
-          >
-            <svg className="w-4 h-4 sm:w-4.5 sm:h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
 
       {/* ── Carousel Viewport Container ── */}
       <div
@@ -549,26 +509,13 @@ export default function StatCardsCarousel({ stats = {}, profitMargin = 0 }) {
                 type="button"
                 onClick={() => handleGoTo(dotIdx)}
                 aria-label={`Go to slide ${dotIdx + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
-                  isActive
-                    ? "w-7 bg-blue-600 dark:bg-blue-500 shadow-sm"
-                    : "w-2 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
-                }`}
+                className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${isActive
+                  ? "w-7 bg-blue-600 dark:bg-blue-500 shadow-sm"
+                  : "w-2 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+                  }`}
               />
             );
           })}
-        </div>
-
-        {/* 5-second Auto-advance indicator bar */}
-        <div className="w-24 sm:w-32 h-1 bg-gray-200/80 dark:bg-gray-800 rounded-full overflow-hidden">
-          <div
-            key={`${currentIndex}-${isPaused}`}
-            className={`h-full bg-blue-500/80 rounded-full ${
-              isPaused
-                ? "w-0"
-                : "w-full animate-[statProgress_5s_linear_infinite]"
-            }`}
-          />
         </div>
       </div>
     </section>
