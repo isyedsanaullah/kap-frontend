@@ -32,8 +32,6 @@ const StockChart = ({ data }) => {
   const { summary = {}, lowStockProducts = [], outOfStockProducts = [] } = data || {}
 
   const [activeTab, setActiveTab] = useState('low')
-  const [searchQuery, setSearchQuery] = useState('')
-
   const inStockCount    = summary.inStock ?? 0
   const lowStockCount   = summary.lowStock ?? lowStockProducts.length
   const outOfStockCount = summary.outOfStock ?? outOfStockProducts.length
@@ -47,17 +45,6 @@ const StockChart = ({ data }) => {
 
   const currentProducts = activeTab === 'low' ? lowStockProducts : outOfStockProducts
   const totalCategoryCount = activeTab === 'low' ? lowStockCount : outOfStockCount
-
-  // Client-side search within the 25 loaded records
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return currentProducts
-    const q = searchQuery.toLowerCase()
-    return currentProducts.filter(p =>
-      (p.name && p.name.toLowerCase().includes(q)) ||
-      (p.sku && p.sku.toLowerCase().includes(q)) ||
-      (p.category && p.category.toLowerCase().includes(q))
-    )
-  }, [currentProducts, searchQuery])
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-white/10 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col gap-5">
@@ -136,86 +123,69 @@ const StockChart = ({ data }) => {
         })}
       </div>
 
-      {/* Tab Switcher & Search Bar */}
+      {/* Tab Switcher: Low Stock vs Out of Stock */}
       <div className="space-y-3 pt-1 border-t border-gray-100 dark:border-white/5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          {/* Tabs */}
-          <div className="flex p-1 bg-gray-100/90 dark:bg-slate-800/80 rounded-2xl border border-gray-200/80 dark:border-white/5 flex-1">
-            <button
-              type="button"
-              onClick={() => { setActiveTab('low'); setSearchQuery('') }}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all ${
-                activeTab === 'low'
-                  ? 'bg-white dark:bg-slate-700 text-amber-700 dark:text-amber-300 shadow-sm'
-                  : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>Low Stock</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
-                activeTab === 'low'
-                  ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200'
-                  : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
-              }`}>
-                {Number(lowStockCount).toLocaleString()}
-              </span>
-            </button>
+        <div className="flex p-1 bg-gray-100/90 dark:bg-slate-800/80 rounded-2xl border border-gray-200/80 dark:border-white/5 w-full">
+          <button
+            type="button"
+            onClick={() => setActiveTab('low')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              activeTab === 'low'
+                ? 'bg-white dark:bg-slate-700 text-amber-700 dark:text-amber-300 shadow-sm'
+                : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+            <span>Low Stock</span>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+              activeTab === 'low'
+                ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200'
+                : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
+            }`}>
+              {Number(lowStockCount).toLocaleString()}
+            </span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => { setActiveTab('out'); setSearchQuery('') }}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all ${
-                activeTab === 'out'
-                  ? 'bg-white dark:bg-slate-700 text-rose-700 dark:text-rose-300 shadow-sm'
-                  : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-rose-500" />
-              <span>Out of Stock</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
-                activeTab === 'out'
-                  ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200'
-                  : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
-              }`}>
-                {Number(outOfStockCount).toLocaleString()}
-              </span>
-            </button>
-          </div>
-
-          {/* Quick Filter Input */}
-          <div className="relative sm:w-48 flex-shrink-0">
-            <svg className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search items..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white text-xs placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-            />
-          </div>
+          <button
+            type="button"
+            onClick={() => setActiveTab('out')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              activeTab === 'out'
+                ? 'bg-white dark:bg-slate-700 text-rose-700 dark:text-rose-300 shadow-sm'
+                : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-rose-500" />
+            <span>Out of Stock</span>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+              activeTab === 'out'
+                ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200'
+                : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
+            }`}>
+              {Number(outOfStockCount).toLocaleString()}
+            </span>
+          </button>
         </div>
 
         {/* List Header Info */}
         <div className="flex items-center justify-between text-[11px] text-gray-400 dark:text-slate-500 px-1">
-          <span>Displaying top {filteredProducts.length} of {totalCategoryCount.toLocaleString()} {activeTab === 'low' ? 'low stock' : 'out of stock'} items</span>
+          <span>Displaying top {currentProducts.length} of {totalCategoryCount.toLocaleString()} {activeTab === 'low' ? 'low stock' : 'out of stock'} items</span>
           <span>Click row to view</span>
         </div>
 
         {/* 25-Product Scrollable List with Redesigned Smooth Scrollbar */}
-        <div className="h-[340px] overflow-y-auto custom-scroll pr-1.5 space-y-1.5">
-          {filteredProducts.length === 0 ? (
+        <div className="h-[560px] overflow-y-auto custom-scroll pr-1.5 space-y-1.5">
+          {currentProducts.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 text-gray-400 dark:text-slate-500">
               <svg className="w-10 h-10 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
               </svg>
               <p className="text-xs font-semibold">
-                {searchQuery ? `No products matching "${searchQuery}"` : `No ${activeTab === 'low' ? 'low stock' : 'out of stock'} products found`}
+                {`No ${activeTab === 'low' ? 'low stock' : 'out of stock'} products found`}
               </p>
             </div>
           ) : (
-            filteredProducts.map((p, index) => {
+            currentProducts.map((p, index) => {
               const isOut = activeTab === 'out' || (p.stock ?? 0) === 0
               return (
                 <button

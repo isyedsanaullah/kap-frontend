@@ -374,8 +374,10 @@ const service = {
     return res.data;
   },
 
-  getStockSummary: async () => {
-    const res = await api.get(routes.analytics.stockSummary);
+  getStockSummary: async (params = {}) => {
+    const res = await api.get(routes.analytics.stockSummary, {
+      params: { limit: 25, ...params }
+    });
     return res.data;
   },
 

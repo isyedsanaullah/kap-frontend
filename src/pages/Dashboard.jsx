@@ -16,18 +16,18 @@ const fmtDateTime = (d) => d ? new Date(d).toLocaleString("en-US", { month: "sho
 const timeAgo = (d) => {
   if (!d) return "";
   const diff = (Date.now() - new Date(d)) / 1000;
-  if (diff < 60)    return "Just now";
-  if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 60) return "Just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
   if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
   return new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 };
 
 const RANGES = [
-  { value: "hour",    label: "Last Hour"    },
-  { value: "day",     label: "Last 24 Hrs"  },
-  { value: "week",    label: "Last 7 Days"  },
-  { value: "month",   label: "Last 30 Days" },
+  { value: "hour", label: "Last Hour" },
+  { value: "day", label: "Last 24 Hrs" },
+  { value: "week", label: "Last 7 Days" },
+  { value: "month", label: "Last 30 Days" },
   { value: "quarter", label: "Last 90 Days" },
 ];
 
@@ -161,7 +161,7 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
         </div>
 
         {/* Top 10 Scrollable List (Height matched with StockChart for clean dashboard symmetry) */}
-        <div className="h-[340px] overflow-y-auto custom-scroll pr-1.5 space-y-2">
+        <div className="h-[560px] overflow-y-auto custom-scroll pr-1.5 space-y-2">
           {topOverdue.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 text-emerald-600 dark:text-emerald-400">
               <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center mb-2">
@@ -228,9 +228,8 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
                   {/* Relative Balance Bar */}
                   <div className="mt-2.5 w-full bg-gray-200/80 dark:bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        i === 0 ? "bg-amber-500" : i < 3 ? "bg-amber-500/80" : "bg-amber-600/50"
-                      }`}
+                      className={`h-full rounded-full transition-all duration-500 ${i === 0 ? "bg-amber-500" : i < 3 ? "bg-amber-500/80" : "bg-amber-600/50"
+                        }`}
                       style={{ width: `${ratio}%` }}
                     />
                   </div>
@@ -442,11 +441,10 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
               key={cat.key}
               type="button"
               onClick={() => setSelectedCategory(cat.key)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                isActive
-                  ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
-                  : "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
-              }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${isActive
+                ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
+                : "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
+                }`}
             >
               {cat.label}
             </button>
@@ -475,9 +473,8 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
               <div
                 key={item.id || idx}
                 onClick={() => item.link && navigate(item.link)}
-                className={`p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-gray-50/80 dark:hover:bg-slate-800/60 transition-colors ${
-                  item.link ? "cursor-pointer group" : ""
-                }`}
+                className={`p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-gray-50/80 dark:hover:bg-slate-800/60 transition-colors ${item.link ? "cursor-pointer group" : ""
+                  }`}
               >
                 {/* Left: Icon, Category Pill, Title & Description */}
                 <div className="flex items-start gap-3.5 min-w-0">
@@ -548,13 +545,13 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
 ══════════════════════════════════════════════════════════════ */
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [range,      setRange]      = useState("week");
-  const [stats,      setStats]      = useState({});
-  const [customers,  setCustomers]  = useState([]);
-  const [analytics,  setAnalytics]  = useState([]);
-  const [activity,   setActivity]   = useState([]);
-  const [stockData,  setStockData]  = useState({});
-  const [loading,    setLoading]    = useState(true);
+  const [range, setRange] = useState("week");
+  const [stats, setStats] = useState({});
+  const [customers, setCustomers] = useState([]);
+  const [analytics, setAnalytics] = useState([]);
+  const [activity, setActivity] = useState([]);
+  const [stockData, setStockData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
@@ -581,12 +578,12 @@ export default function Dashboard() {
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   const profitMargin = stats.profitMargin ?? 0;
-  const recentSales  = Array.isArray(stats.recentSales) ? stats.recentSales : [];
-  const chartData    = analytics.map(row => ({
+  const recentSales = Array.isArray(stats.recentSales) ? stats.recentSales : [];
+  const chartData = analytics.map(row => ({
     period: row._id,
-    Sales:  row.totalSales || 0,
-    Paid:   row.totalPaid  || 0,
-    Due:    row.totalDue   || 0,
+    Sales: row.totalSales || 0,
+    Paid: row.totalPaid || 0,
+    Due: row.totalDue || 0,
   }));
 
   if (loading) return <DashboardSkeleton />;
@@ -605,11 +602,10 @@ export default function Dashboard() {
                   key={r.value}
                   type="button"
                   onClick={() => setRange(r.value)}
-                  className={`flex-1 py-2 sm:py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer ${
-                    isActive
-                      ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm border border-gray-200/80 dark:border-white/10"
-                      : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-slate-700/40"
-                  }`}
+                  className={`flex-1 py-2 sm:py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer ${isActive
+                    ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm border border-gray-200/80 dark:border-white/10"
+                    : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-slate-700/40"
+                    }`}
                 >
                   {r.label}
                 </button>
@@ -679,10 +675,10 @@ export default function Dashboard() {
                 <tbody className="divide-y divide-gray-100 dark:divide-white/5">
                   {recentSales.map(s => {
                     const total = Number(s.totalAmount) || 0;
-                    const paid  = Number(s.paidAmount)  || 0;
-                    const due   = Math.max(total - paid, 0);
+                    const paid = Number(s.paidAmount) || 0;
+                    const due = Math.max(total - paid, 0);
                     const isFullyPaid = due <= 0;
-                    const isPartial   = paid > 0 && due > 0;
+                    const isPartial = paid > 0 && due > 0;
 
                     return (
                       <tr
@@ -748,21 +744,21 @@ export default function Dashboard() {
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
                 <defs>
                   <linearGradient id="gSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#3b82f6" stopOpacity={0.25}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gPaid" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor="#10b981" stopOpacity={0.25}/>
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:[stroke:#334155]"/>
-                <XAxis dataKey="period" tick={{ fontSize: 11, fill: "#94a3b8" }} tickLine={false} axisLine={false}/>
-                <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} tickLine={false} axisLine={false} width={65} tickFormatter={v => `${(v/1000).toFixed(0)}k`}/>
-                <Tooltip content={<ChartTooltip/>}/>
-                <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "8px" }}/>
-                <Area type="monotone" dataKey="Sales" stroke="#3b82f6" strokeWidth={2.5} fill="url(#gSales)" dot={false}/>
-                <Area type="monotone" dataKey="Paid"  stroke="#10b981" strokeWidth={2.5} fill="url(#gPaid)"  dot={false}/>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:[stroke:#334155]" />
+                <XAxis dataKey="period" tick={{ fontSize: 11, fill: "#94a3b8" }} tickLine={false} axisLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: "#94a3b8" }} tickLine={false} axisLine={false} width={65} tickFormatter={v => `${(v / 1000).toFixed(0)}k`} />
+                <Tooltip content={<ChartTooltip />} />
+                <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "8px" }} />
+                <Area type="monotone" dataKey="Sales" stroke="#3b82f6" strokeWidth={2.5} fill="url(#gSales)" dot={false} />
+                <Area type="monotone" dataKey="Paid" stroke="#10b981" strokeWidth={2.5} fill="url(#gPaid)" dot={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
