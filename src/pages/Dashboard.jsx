@@ -94,24 +94,26 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto space-y-5">
 
         {/* ── Range Picker ── */}
-        <div className="flex items-center gap-1 p-1 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 rounded-2xl backdrop-blur-sm w-full sm:w-auto">
-          {RANGES.map(r => {
-            const isActive = r.value === range;
-            return (
-              <button
-                key={r.value}
-                type="button"
-                onClick={() => setRange(r.value)}
-                className={`flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
-                  isActive
-                    ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm border border-gray-200/80 dark:border-gray-600/60"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/60 dark:hover:bg-gray-700/50"
-                }`}
-              >
-                {r.label}
-              </button>
-            );
-          })}
+        <div className="w-full p-1 bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/60 rounded-2xl backdrop-blur-sm">
+          <div className="flex items-center gap-1">
+            {RANGES.map(r => {
+              const isActive = r.value === range;
+              return (
+                <button
+                  key={r.value}
+                  type="button"
+                  onClick={() => setRange(r.value)}
+                  className={`flex-1 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40 ${
+                    isActive
+                      ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm border border-gray-200/80 dark:border-gray-600/60"
+                      : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-700/40"
+                  }`}
+                >
+                  {r.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* ── Statistics Cards Carousel ── */}
