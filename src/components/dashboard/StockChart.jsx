@@ -6,9 +6,9 @@ import {
 } from 'recharts'
 
 const COLORS = {
-  inStock:    { bar: '#10b981', bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200/80 dark:border-emerald-800/40', text: 'text-emerald-700 dark:text-emerald-400', label: 'In Stock' },
-  lowStock:   { bar: '#f59e0b', bg: 'bg-amber-50 dark:bg-amber-950/30',    border: 'border-amber-200/80 dark:border-amber-800/40',    text: 'text-amber-700 dark:text-amber-400',    label: 'Low Stock' },
-  outOfStock: { bar: '#ef4444', bg: 'bg-rose-50 dark:bg-rose-950/30',      border: 'border-rose-200/80 dark:border-rose-800/40',      text: 'text-rose-700 dark:text-rose-400',      label: 'Out of Stock' },
+  inStock: { bar: '#10b981', bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200/80 dark:border-emerald-800/40', text: 'text-emerald-700 dark:text-emerald-400', label: 'In Stock' },
+  lowStock: { bar: '#f59e0b', bg: 'bg-amber-50 dark:bg-amber-950/30', border: 'border-amber-200/80 dark:border-amber-800/40', text: 'text-amber-700 dark:text-amber-400', label: 'Low Stock' },
+  outOfStock: { bar: '#ef4444', bg: 'bg-rose-50 dark:bg-rose-950/30', border: 'border-rose-200/80 dark:border-rose-800/40', text: 'text-rose-700 dark:text-rose-400', label: 'Out of Stock' },
 }
 
 const CustomTooltip = ({ active, payload }) => {
@@ -32,14 +32,14 @@ const StockChart = ({ data }) => {
   const { summary = {}, lowStockProducts = [], outOfStockProducts = [] } = data || {}
 
   const [activeTab, setActiveTab] = useState('low')
-  const inStockCount    = summary.inStock ?? 0
-  const lowStockCount   = summary.lowStock ?? lowStockProducts.length
+  const inStockCount = summary.inStock ?? 0
+  const lowStockCount = summary.lowStock ?? lowStockProducts.length
   const outOfStockCount = summary.outOfStock ?? outOfStockProducts.length
-  const totalTracked    = inStockCount + lowStockCount + outOfStockCount
+  const totalTracked = inStockCount + lowStockCount + outOfStockCount
 
   const chartData = useMemo(() => [
-    { label: 'In Stock',     value: inStockCount,    color: COLORS.inStock.bar },
-    { label: 'Low Stock',    value: lowStockCount,   color: COLORS.lowStock.bar },
+    { label: 'In Stock', value: inStockCount, color: COLORS.inStock.bar },
+    { label: 'Low Stock', value: lowStockCount, color: COLORS.lowStock.bar },
     { label: 'Out of Stock', value: outOfStockCount, color: COLORS.outOfStock.bar },
   ], [inStockCount, lowStockCount, outOfStockCount])
 
@@ -129,19 +129,17 @@ const StockChart = ({ data }) => {
           <button
             type="button"
             onClick={() => setActiveTab('low')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'low'
-                ? 'bg-white dark:bg-slate-700 text-amber-700 dark:text-amber-300 shadow-sm'
-                : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${activeTab === 'low'
+              ? 'bg-white dark:bg-slate-700 text-amber-700 dark:text-amber-300 shadow-sm'
+              : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
           >
             <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             <span>Low Stock</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
-              activeTab === 'low'
-                ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200'
-                : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
-            }`}>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${activeTab === 'low'
+              ? 'bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200'
+              : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
+              }`}>
               {Number(lowStockCount).toLocaleString()}
             </span>
           </button>
@@ -149,32 +147,23 @@ const StockChart = ({ data }) => {
           <button
             type="button"
             onClick={() => setActiveTab('out')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'out'
-                ? 'bg-white dark:bg-slate-700 text-rose-700 dark:text-rose-300 shadow-sm'
-                : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${activeTab === 'out'
+              ? 'bg-white dark:bg-slate-700 text-rose-700 dark:text-rose-300 shadow-sm'
+              : 'text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
           >
             <span className="w-2 h-2 rounded-full bg-rose-500" />
             <span>Out of Stock</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
-              activeTab === 'out'
-                ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200'
-                : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
-            }`}>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${activeTab === 'out'
+              ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-200'
+              : 'bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-slate-300'
+              }`}>
               {Number(outOfStockCount).toLocaleString()}
             </span>
           </button>
         </div>
-
-        {/* List Header Info */}
-        <div className="flex items-center justify-between text-[11px] text-gray-400 dark:text-slate-500 px-1">
-          <span>Displaying top {currentProducts.length} of {totalCategoryCount.toLocaleString()} {activeTab === 'low' ? 'low stock' : 'out of stock'} items</span>
-          <span>Click row to view</span>
-        </div>
-
         {/* 25-Product Scrollable List with Redesigned Smooth Scrollbar */}
-        <div className="h-[560px] overflow-y-auto custom-scroll pr-1.5 space-y-1.5">
+        <div className="h-[350px] overflow-y-auto custom-scroll pr-1.5 space-y-1.5">
           {currentProducts.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 text-gray-400 dark:text-slate-500">
               <svg className="w-10 h-10 mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">

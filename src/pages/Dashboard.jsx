@@ -224,7 +224,6 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
                       </svg>
                     </div>
                   </div>
-
                   {/* Relative Balance Bar */}
                   <div className="mt-2.5 w-full bg-gray-200/80 dark:bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
                     <div
@@ -238,7 +237,6 @@ const OverdueSummaryCards = ({ stats, customers, navigate }) => {
             })
           )}
         </div>
-
         {/* Footer info */}
         <div className="pt-2 border-t border-gray-100 dark:border-white/5 flex items-center justify-between text-xs text-gray-500 dark:text-slate-400">
           <span>{topOverdue.length} top debtor accounts displayed</span>
@@ -432,24 +430,27 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
         </button>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto custom-scroll pb-1">
-        {categories.map(cat => {
-          const isActive = selectedCategory === cat.key;
-          return (
-            <button
-              key={cat.key}
-              type="button"
-              onClick={() => setSelectedCategory(cat.key)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${isActive
-                ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30"
-                : "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white"
+      {/* Category Filter Tabs covering full width */}
+      <div className="w-full p-1 bg-gray-100/80 dark:bg-slate-800/80 border border-gray-200/80 dark:border-white/5 rounded-2xl backdrop-blur-sm shadow-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1 w-full">
+          {categories.map(cat => {
+            const isActive = selectedCategory === cat.key;
+            return (
+              <button
+                key={cat.key}
+                type="button"
+                onClick={() => setSelectedCategory(cat.key)}
+                className={`w-full py-2 sm:py-2.5 px-2 rounded-xl text-xs font-semibold whitespace-nowrap text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 cursor-pointer ${
+                  isActive
+                    ? "bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm border border-gray-200/80 dark:border-white/10 font-bold"
+                    : "text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-slate-700/40"
                 }`}
-            >
-              {cat.label}
-            </button>
-          );
-        })}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Activity Records Table / Feed */}
