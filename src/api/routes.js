@@ -2,14 +2,19 @@
 
 const routes = {
   auth: {
-    login: "/auth/login",
+    login:              "/auth/login",
+    sessions:           "/auth/sessions",
+    revokeSession:      (id) => `/auth/sessions/${id}`,
+    revokeAllSessions:  "/auth/sessions",
   },
 
   analytics: {
-    dashboard: "/analytics/dashboard",
-    sales: "/analytics/sales",
-    profit: "/analytics/profit",
+    dashboard:     "/analytics/dashboard",
+    sales:         "/analytics/sales",
+    profit:        "/analytics/profit",
     productProfit: "/analytics/product-profit",
+    activity:      "/analytics/activity",
+    stockSummary:  "/analytics/stock-summary",
   },
   customers: {
     base: "/customers",

@@ -26,6 +26,7 @@ import Profile          from "../../pages/Profile";
 import Notifications    from "../../pages/Notifications";
 import Stock            from "../../pages/stock/Stock";
 import Drafts           from "../../pages/Drafts";
+import Setting          from "../../pages/Setting";
 
 const MainLayout = () => {
 
@@ -77,6 +78,8 @@ const MainLayout = () => {
             <Route path="/notifications"       element={<Notifications />} />
             <Route path="/stock"               element={<Stock />} />
             <Route path="/drafts"              element={<Drafts />} />
+            <Route path="/settings"            element={<Setting />} />
+            <Route path="/setting"             element={<Setting />} />
           </Routes>
         </Content>
       </div>

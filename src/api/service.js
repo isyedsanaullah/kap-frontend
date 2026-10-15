@@ -365,6 +365,37 @@ const service = {
     const res = await api.get(routes.version);
     return res.data;
   },
+
+  /* =========================
+     ACTIVITY & STOCK SUMMARY
+  ========================= */
+  getRecentActivity: async () => {
+    const res = await api.get(routes.analytics.activity);
+    return res.data;
+  },
+
+  getStockSummary: async () => {
+    const res = await api.get(routes.analytics.stockSummary);
+    return res.data;
+  },
+
+  /* =========================
+     DEVICE SESSIONS
+  ========================= */
+  getSessions: async () => {
+    const res = await api.get(routes.auth.sessions);
+    return res.data;
+  },
+
+  revokeSession: async (sessionId) => {
+    const res = await api.delete(routes.auth.revokeSession(sessionId));
+    return res.data;
+  },
+
+  revokeAllOtherSessions: async () => {
+    const res = await api.delete(routes.auth.revokeAllSessions);
+    return res.data;
+  },
 };
 
 export default service;

@@ -20,9 +20,34 @@ const Login = () => {
     setSubmitting(true);
 
     try {
+      // Detect client device information
+      const ua = navigator.userAgent || "";
+      let deviceType = "desktop";
+      if (/mobile|android|iphone|ipod|blackberry|iemobile/i.test(ua)) deviceType = "mobile";
+      else if (/ipad|tablet|silk/i.test(ua)) deviceType = "tablet";
+
+      let os = "Device";
+      if (/windows nt 10/i.test(ua)) os = "Windows 10/11";
+      else if (/windows/i.test(ua)) os = "Windows";
+      else if (/macintosh|mac os x/i.test(ua)) os = "macOS";
+      else if (/android/i.test(ua)) os = "Android";
+      else if (/iphone/i.test(ua)) os = "iPhone";
+      else if (/ipad/i.test(ua)) os = "iPad";
+      else if (/linux/i.test(ua)) os = "Linux";
+
+      let browser = "Web Browser";
+      if (/edg\//i.test(ua)) browser = "Edge";
+      else if (/chrome/i.test(ua)) browser = "Chrome";
+      else if (/firefox/i.test(ua)) browser = "Firefox";
+      else if (/safari/i.test(ua)) browser = "Safari";
+
+      const deviceName = `${browser} on ${os}`;
+
       const { data } = await api.post("/auth/login", {
         email,
         password,
+        deviceName,
+        deviceType,
       });
 
       login(data.accessToken, data.user);
