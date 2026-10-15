@@ -165,11 +165,11 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const [statsRes, custsRes, analyticsRes, activityRes, stockRes] = await Promise.all([
-        service.getDashboardStats({ period: range }),
-        service.getCustomers(),
-        service.getSalesAnalytics({ period: range }),
-        service.getRecentActivity(),
-        service.getStockSummary(),
+        service.getDashboardStats({ period: range }).catch(err => { console.error("Stats error:", err); return {}; }),
+        service.getCustomers().catch(err => { console.error("Customers error:", err); return { customers: [] }; }),
+        service.getSalesAnalytics({ period: range }).catch(err => { console.error("Analytics error:", err); return []; }),
+        service.getRecentActivity().catch(err => { console.warn("Activity error:", err); return { activities: [] }; }),
+        service.getStockSummary().catch(err => { console.warn("Stock summary error:", err); return {}; }),
       ]);
       setStats(statsRes || {});
       setCustomers(Array.isArray(custsRes?.customers) ? custsRes.customers : []);
