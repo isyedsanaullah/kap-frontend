@@ -430,9 +430,42 @@ const RecentActivitySection = ({ activity = [], navigate }) => {
         </button>
       </div>
 
-      {/* Category Filter Tabs covering full width */}
-      <div className="w-full p-1 bg-gray-100/80 dark:bg-slate-800/80 border border-gray-200/80 dark:border-white/5 rounded-2xl backdrop-blur-sm shadow-sm">
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1 w-full">
+      {/* Mobile View: Clean Dropdown Selector */}
+      <div className="sm:hidden relative w-full">
+        <label htmlFor="activity-category-select" className="sr-only">
+          Select Activity Category
+        </label>
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-indigo-500 dark:text-indigo-400">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+          </svg>
+        </div>
+        <select
+          id="activity-category-select"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full appearance-none bg-gray-100/90 dark:bg-slate-800/90 border border-gray-200/80 dark:border-white/10 rounded-2xl py-3 pl-10 pr-10 text-xs font-bold text-gray-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm cursor-pointer transition-all"
+        >
+          {categories.map(cat => (
+            <option
+              key={cat.key}
+              value={cat.key}
+              className="bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 py-1.5"
+            >
+              {cat.label}
+            </option>
+          ))}
+        </select>
+        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-gray-400 dark:text-slate-500">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Desktop / Tablet View: Full Width Grid Tabs */}
+      <div className="hidden sm:block w-full p-1 bg-gray-100/80 dark:bg-slate-800/80 border border-gray-200/80 dark:border-white/5 rounded-2xl backdrop-blur-sm shadow-sm">
+        <div className="grid grid-cols-4 lg:grid-cols-8 gap-1 w-full">
           {categories.map(cat => {
             const isActive = selectedCategory === cat.key;
             return (
